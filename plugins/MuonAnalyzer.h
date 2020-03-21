@@ -54,7 +54,7 @@ class ExampleMuonAnalyzer: public edm::EDAnalyzer {
  protected:
 
  private:
-  InputTag BeamSpot;
+  InputTag BeamSpot_;
   InputTag PrimaryVtx;
   InputTag GenParticle_;
   
