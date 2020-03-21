@@ -30,10 +30,16 @@ using namespace std;
 
 ExampleMuonAnalyzer::ExampleMuonAnalyzer(const ParameterSet& pset)
 {
-  beamSpotToken  = consumes<reco::BeamSpot>(pset.getParameter<InputTag>("beamSpot"));
-  muonToken      = consumes<pat::MuonCollection>(pset.getParameter<InputTag>("MuonCollection"));
-  prunedGenToken = consumes<edm::View<reco::GenParticle>>(pset.getParameter<InputTag>("GenParticles"));
-  vtxToken       = consumes<reco::VertexCollection>(pset.getParameter<InputTag>("vertices"));
+	BeamSpot_ = pset.getParameter <InputTag> ("beamSpot");
+	PrimaryVtx = pset.getParameter <InputTag> ("PrimaryVertexCollection");
+	GenParticle_ = pset.getParameter <InputTag> ("GenParticleCollection");
+	
+	
+	
+  //beamSpotToken  = consumes<reco::BeamSpot>(pset.getParameter<InputTag>("beamSpot"));
+  //muonToken      = consumes<pat::MuonCollection>(pset.getParameter<InputTag>("MuonCollection"));
+  //prunedGenToken = consumes<edm::View<reco::GenParticle>>(pset.getParameter<InputTag>("GenParticles"));
+  //vtxToken       = consumes<reco::VertexCollection>(pset.getParameter<InputTag>("vertices"));
 }
 
 
@@ -169,16 +175,16 @@ void ExampleMuonAnalyzer::endJob() {}
 void ExampleMuonAnalyzer::analyze(const Event& event, const EventSetup& eventSetup)
 {
   // BeamSpot
-  edm::Handle<reco::BeamSpot> beamSpot;
-  event.getByToken(beamSpotToken, beamSpot);
-  reco::BeamSpot bs;
+  Handle<BeamSpot> theBeamSpot;
+  event.getByLabel(BeamSpot_, theBeamSpot);
+  BeamSpot bs = *theBeamSpot;
 
   if (beamSpot.isValid()) bs = *beamSpot;    
 
 
   // Vertex collection
-  edm::Handle<reco::VertexCollection> vertices;
-  event.getByToken(vtxToken, vertices);
+  Handle<VertexCollection> vertices;
+  event.getByLabel(PrimaryVtx, vertices);
   
   
   //Look for the primary vertex and use the BeamSpot if can't find it.
@@ -206,7 +212,7 @@ void ExampleMuonAnalyzer::analyze(const Event& event, const EventSetup& eventSet
     posVtx = ((*vertices)[theIndexOfThePrimaryVertex]).position();
     errVtx = ((*vertices)[theIndexOfThePrimaryVertex]).error();
   }
-  else if (beamSpot.isValid()) {
+  else if (theBeamSpot.isValid()) {
     LogInfo("ExampleMuonAnalyzer") << "reco::PrimaryVertex not found, use BeamSpot position instead\n";
 
     posVtx      = bs.position();
@@ -221,42 +227,41 @@ void ExampleMuonAnalyzer::analyze(const Event& event, const EventSetup& eventSet
  
  
   //Muon Collection
-  Handle<pat::MuonCollection> muon;
-  event.getByToken(packedGenToken, packed);
+  Handle<MuonCollection> muons;
+  event.getByLabel("muons", muons);
+	
    
- 
-  // Packed particles are all the status 1, therefore usable to remake jets
-  // The navigation from status 1 to pruned is possible (the other direction should be made by hand)
-  //----------------------------------------------------------------------------
-  Handle<edm::View<pat::PackedGenParticle> > packed;
-  event.getByToken(packedGenToken, packed);
 
 
-  // Pruned particles are the ones containing "important" stuff
-  //----------------------------------------------------------------------------
-  Handle<edm::View<reco::GenParticle> > pruned;
-  event.getByToken(prunedGenToken, pruned);
+  	edm::Handle<GenParticleCollection> genParticles;
+	event.getByLabel(GenParticle_, genParticles);
+	
+	
+	
+	
+	
+	
 
-  for (size_t i=0; i<pruned->size(); i++) {
+  for (size_t i=0; i<genParticles->size(); i++) {
 
-    if (abs((*pruned)[i].pdgId()) != 13)    continue;
-    if (!(*pruned)[i].isPromptFinalState()) continue;
-    if (!(*pruned)[i].isLastCopy())         continue;
+    if (abs((*genParticles)[i].pdgId()) != 13)    continue;
+    if (!(*genParticles)[i].isPromptFinalState()) continue;
+    if (!(*genParticles)[i].isLastCopy())         continue;
 
-    Float_t charge = (*pruned)[i].charge();
-    Float_t eta    = (*pruned)[i].eta();
-    Float_t phi    = (*pruned)[i].phi();
-    Float_t pt     = (*pruned)[i].pt();
-    Float_t vx     = (*pruned)[i].vx();
-    Float_t vy     = (*pruned)[i].vy();
-    Float_t vz     = (*pruned)[i].vz();
+    Float_t charge = (*genParticles)[i].charge();
+    Float_t eta    = (*genParticles)[i].eta();
+    Float_t phi    = (*genParticles)[i].phi();
+    Float_t pt     = (*genParticles)[i].pt();
+    Float_t vx     = (*genParticles)[i].vx();
+    Float_t vy     = (*genParticles)[i].vy();
+    Float_t vz     = (*genParticles)[i].vz();
     Float_t vxy    = sqrt(vx*vx + vy*vy);
     Float_t vr     = sqrt(vx*vx + vy*vy + vz*vz);
 
     if (fabs(eta) > 2.4) continue;
     if (pt < pt_min)     continue;
     
-    pat::PackedGenParticle pks((*pruned)[i], reco::GenParticleRef());
+    pat::PackedGenParticle pks((*genParticles)[i], reco::GenParticleRef());
 
     Float_t dxy = pks.dxy(posVtx);
     Float_t dz  = pks.dz(posVtx);
@@ -276,7 +281,7 @@ void ExampleMuonAnalyzer::analyze(const Event& event, const EventSetup& eventSet
     Float_t tight_pt_resolution = -999;
     Float_t soft_pt_resolution  = -999;
     
-    for (pat::MuonCollection::const_iterator muon=muons->begin(); muon!=muons->end(); ++muon) {
+    for (MuonCollection::const_iterator muon=muons->begin(); muon!=muons->end(); ++muon) {
 
       Float_t chargeIso  = muon->pfIsolationR04().sumChargedHadronPt;
       Float_t neutralIso = muon->pfIsolationR04().sumNeutralHadronEt;
