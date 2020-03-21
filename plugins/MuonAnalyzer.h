@@ -54,10 +54,16 @@ class ExampleMuonAnalyzer: public edm::EDAnalyzer {
  protected:
 
  private:
-  edm::EDGetTokenT<reco::BeamSpot>                    beamSpotToken;
-  edm::EDGetTokenT<pat::MuonCollection>               muonToken;
-  edm::EDGetTokenT<edm::View<reco::GenParticle>>      prunedGenToken;
-  edm::EDGetTokenT<reco::VertexCollection>            vtxToken;
+  InputTag BeamSpot;
+  InputTag PrimaryVtx;
+  InputTag GenParticle_;
+  
+  
+  
+  //edm::EDGetTokenT<reco::BeamSpot>                    beamSpotToken;
+  //edm::EDGetTokenT<pat::MuonCollection>               muonToken;
+  //edm::EDGetTokenT<edm::View<reco::GenParticle>>      prunedGenToken;
+  //edm::EDGetTokenT<reco::VertexCollection>            vtxToken;
 
   TH1F* h_dxy;
   TH1F* h_dz;
