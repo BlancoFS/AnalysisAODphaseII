@@ -32,8 +32,7 @@ ExampleMuonAnalyzer::ExampleMuonAnalyzer(const ParameterSet& pset)
 {
   beamSpotToken  = consumes<reco::BeamSpot>(pset.getParameter<InputTag>("beamSpot"));
   muonToken      = consumes<pat::MuonCollection>(pset.getParameter<InputTag>("MuonCollection"));
-  packedGenToken = consumes<edm::View<pat::PackedGenParticle>>(pset.getParameter<InputTag>("packed"));
-  prunedGenToken = consumes<edm::View<reco::GenParticle>>(pset.getParameter<InputTag>("pruned"));
+  prunedGenToken = consumes<edm::View<reco::GenParticle>>(pset.getParameter<InputTag>("GenParticles"));
   vtxToken       = consumes<reco::VertexCollection>(pset.getParameter<InputTag>("vertices"));
 }
 
