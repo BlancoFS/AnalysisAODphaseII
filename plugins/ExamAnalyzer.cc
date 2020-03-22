@@ -71,14 +71,14 @@ void ExampleMuonAnalyzer::analyze(const Event& event, const EventSetup& eventSet
     if (abs((*genP)[i].pdgId()) != 13)    continue;
     if (!(*genP)[i].isPromptFinalState()) continue;
     if (!(*genP)[i].isLastCopy())         continue;
-    
+  }
     
     
   
 
 
 }
-
+DEFINE_FWK_MODULE(ExampleMuonAnalyzer);
 
 
   
