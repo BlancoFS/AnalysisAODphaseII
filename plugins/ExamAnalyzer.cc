@@ -48,6 +48,7 @@ void ExampleMuonAnalyzer::beginJob()
 {
   cout << "\n [ExampleMuonAnalyzer::beginJob]\n" << endl;
   
+  edm::Service<TFileService> fileService;
 
 }
 
