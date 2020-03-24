@@ -39,13 +39,13 @@ const double deltaR_max = 0.3;
 
 
 
-class ExampleMuonAnalyzer: public edm::EDAnalyzer {
+class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
  public:
   // Constructor
-  ExampleMuonAnalyzer(const edm::ParameterSet& pset);
+  ExampleMuonAnalyzer2(const edm::ParameterSet& pset);
 
   // Destructor
-  virtual ~ExampleMuonAnalyzer();
+  virtual ~ExampleMuonAnalyzer2();
 
   // Operations
   void analyze(const edm::Event & event, const edm::EventSetup& eventSetup);
