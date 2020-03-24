@@ -58,7 +58,7 @@ process.TFileService=cms.Service('TFileService',
                                  fileName=cms.string(outputFileName)
                                  )
 
-process.muonAnalysis = cms.EDAnalyzer("ExampleMuonAnalyzer",
+process.muonAnalysis = cms.EDAnalyzer("ExampleMuonAnalyzer2",
                                       MuonCollection = cms.InputTag("muons"),
                                       genCollection = cms.InputTag("genParticles"),
                                       vertices = cms.InputTag("offlinePrimaryVertices"),
