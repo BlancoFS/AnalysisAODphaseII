@@ -33,7 +33,7 @@ ExampleMuonAnalyzer2::ExampleMuonAnalyzer2(const ParameterSet& pset)
 {
 
   muonToken = consumes<reco::Muon>(pset.getParameter<InputTag>("MuonCollection"));
-  genToken = consumes<reco::genParticle>(pset.getParameter<InputTag>("genCollection"));
+  genToken = consumes<reco::GenParticle>(pset.getParameter<InputTag>("genCollection"));
   vtxToken = consumes<reco::Vertex>(pset.getParameter<InputTag> ("vertices"));
   beamSpotToken = consumes<reco::BeamSpot>(pset.getParameter<InputTag> ("beamSpot")); 
   
@@ -80,28 +80,3 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 
 }
 DEFINE_FWK_MODULE(ExampleMuonAnalyzer2);
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
