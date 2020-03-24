@@ -32,9 +32,9 @@ using namespace std;
 ExampleMuonAnalyzer2::ExampleMuonAnalyzer2(const ParameterSet& pset)
 {
 
-  muonToken = consumes<reco::Muon>(pset.getParameter<InputTag>("MuonCollection"));
-  genToken = consumes<reco::GenParticle>(pset.getParameter<InputTag>("genCollection"));
-  vtxToken = consumes<reco::Vertex>(pset.getParameter<InputTag> ("vertices"));
+  muonToken = consumes<reco::MuonCollection>(pset.getParameter<InputTag>("MuonCollection"));
+  genToken = consumes<reco::GenParticleCollection>(pset.getParameter<InputTag>("genCollection"));
+  vtxToken = consumes<reco::VertexCollection>(pset.getParameter<InputTag> ("vertices"));
   beamSpotToken = consumes<reco::BeamSpot>(pset.getParameter<InputTag> ("beamSpot")); 
   
 }
@@ -59,19 +59,19 @@ void ExampleMuonAnalyzer2::endJob() {}
 void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSetup)
 {
   
-  Handle<reco::Muon> muons;
+  Handle<reco::MuonCollection> muons;
   event.getByToken(muonToken, muons);
   
-  Handle<reco::GenParticle> genParticles;
+  Handle<reco::GenParticleCollection> genParticles;
   event.getByToken(genToken, genParticles);
   
   
   for (size_t i=0; i < genParticles->size(); i++) {
     
     
-    if (abs((*genParticle)[i].pdgId()) != 13)    continue;
-    if (!(*genParticle)[i].isPromptFinalState()) continue;
-    if (!(*genParticle)[i].isLastCopy())         continue;
+    if (abs((*genParticles)[i].pdgId()) != 13)    continue;
+    if (!(*genParticles)[i].isPromptFinalState()) continue;
+    if (!(*genParticles)[i].isLastCopy())         continue;
   }
     
     
