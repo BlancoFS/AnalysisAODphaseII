@@ -6,7 +6,7 @@ process = cms.Process("RecoMuon")
 options = opts.VarParsing('analysis')
 
 options.register ('inputDataset',
-                  'DisplacedMuons_PU200',
+                  '',
                   opts.VarParsing.multiplicity.singleton,
                   opts.VarParsing.varType.string,
                   'Input dataset')
@@ -59,10 +59,9 @@ process.TFileService=cms.Service('TFileService',
                                  )
 
 process.muonAnalysis = cms.EDAnalyzer("ExampleMuonAnalyzer",
-                                      MuonCollection = cms.InputTag('slimmedMuons'),
-                                      packed = cms.InputTag("packedGenParticles"),
-                                      pruned = cms.InputTag("prunedGenParticles"),
-                                      vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+                                      MuonCollection = cms.InputTag("muons"),
+                                      genCollection = cms.InputTag("genParticles"),
+                                      vertices = cms.InputTag("offlinePrimaryVertices"),
                                       beamSpot = cms.InputTag("offlineBeamSpot")
                                       )
 
