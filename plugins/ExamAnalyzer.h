@@ -57,11 +57,10 @@ class ExampleMuonAnalyzer: public edm::EDAnalyzer {
  protected:
 
  private:
-  edm::EDGetTokenT<pat::MuonCollection>               muonToken;
+  edm::EDGetTokenT<reco::Muon>                        muonToken;
   edm::EDGetTokenT<reco::GenParticle>                 genToken;
-  edm::EDGetTokenT<pat::packedGenParticle>            packedGen;
-  
-  
+  edm::EDGetTokenT<reco::Vertex>                      vtxToken;
+  edm::EDGetTokenT<reco::BeamSpot>                    beamSpotToken;
   
   
 };
