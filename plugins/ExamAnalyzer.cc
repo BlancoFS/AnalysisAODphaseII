@@ -79,7 +79,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 
 
 }
-DEFINE_FWK_MODULE(ExampleMuonAnalyzer);
+DEFINE_FWK_MODULE(ExampleMuonAnalyzer2);
 
 
   
