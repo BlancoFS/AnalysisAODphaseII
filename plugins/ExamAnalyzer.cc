@@ -62,7 +62,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
   Handle<reco::Muon> muons;
   event.getByToken(muonToken, muons);
   
-  Hanlde<reco::GenParticle> genParticles;
+  Handle<reco::GenParticle> genParticles;
   event.getByToken(genToken, genParticles);
   
   
