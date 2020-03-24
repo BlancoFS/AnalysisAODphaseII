@@ -29,7 +29,7 @@ using namespace std;
 
 
 
-ExampleMuonAnalyzer::ExampleMuonAnalyzer(const ParameterSet& pset)
+ExampleMuonAnalyzer2::ExampleMuonAnalyzer2(const ParameterSet& pset)
 {
 
   muonToken = consumes<reco::Muon>(pset.getParameter<InputTag>("MuonCollection"));
@@ -40,11 +40,11 @@ ExampleMuonAnalyzer::ExampleMuonAnalyzer(const ParameterSet& pset)
 }
 
 
-ExampleMuonAnalyzer::~ExampleMuonAnalyzer() {}
+ExampleMuonAnalyzer2::~ExampleMuonAnalyzer2() {}
 
 
 
-void ExampleMuonAnalyzer::beginJob() 
+void ExampleMuonAnalyzer2::beginJob() 
 {
   cout << "\n [ExampleMuonAnalyzer::beginJob]\n" << endl;
   
@@ -53,10 +53,10 @@ void ExampleMuonAnalyzer::beginJob()
 }
 
 
-void ExampleMuonAnalyzer::endJob() {}
+void ExampleMuonAnalyzer2::endJob() {}
 
 
-void ExampleMuonAnalyzer::analyze(const Event& event, const EventSetup& eventSetup)
+void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSetup)
 {
   
   Handle<reco::Muon> muons;
