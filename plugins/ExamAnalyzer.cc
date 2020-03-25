@@ -133,11 +133,6 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
     if (!(*genParticles)[i].isLastCopy())         continue;
     
     
-    //Set the vertex position.
-    (*genParticles)[i].setVertex(posVtx);
-    //--------------------------------------------------------------
-    
-    
     Float_t charge = (*genParticles)[i].charge();
     Float_t eta = (*genParticles)[i].eta();
     Float_t phi = (*genParticles)[i].phi();
