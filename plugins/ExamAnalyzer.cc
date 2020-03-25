@@ -440,7 +440,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       }
     }  // for..muons
 	  
-    for (auto track = displacedGlobalMuons->begin(); track! = displacedGlobalMuons->end(); ++track){
+    for (reco::Track::const_iterator track = displacedGlobalMuons->begin(); track! = displacedGlobalMuons->end(); ++track){
 	    
 	    if (!track.innerOk()) continue;
 	    if (!track.outerOk()) continue;
@@ -669,11 +669,11 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 	      else
 	      {
 		      hDispGlbMuons_noGen_vxy->Fill(vxy);
-		      hDispGlbMuons_no_Gen_vz->Fill(fabs(vz));
-		      hDispGlbMuons_no_Gen_vr->Fill(vr);
-		      hDispGlbMuons_no_Gen_eta->Fill(eta);
-		      hDispGlbMuons_no_Gen_phi->Fill(phi);
-		      hDispGlbMuons_no_Gen_pt->Fill(pt);  
+		      hDispGlbMuons_noGen_vz->Fill(fabs(vz));
+		      hDispGlbMuons_noGen_vr->Fill(vr);
+		      hDispGlbMuons_noGen_eta->Fill(eta);
+		      hDispGlbMuons_noGen_phi->Fill(phi);
+		      hDispGlbMuons_noGen_pt->Fill(pt);  
 	      }
       }
   } //...End gen particles loop.
