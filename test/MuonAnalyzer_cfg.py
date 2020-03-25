@@ -35,18 +35,12 @@ process.MessageLogger.cerr.INFO = cms.untracked.PSet(limit = cms.untracked.int32
 
 if 'BSMH_CTau-400' in options.inputDataset :
     print '\n Will read /H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650\n'
-    
-    for i in range(1,1000)
-      options.inputFiles = \
-      'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_'+i+'.root', \
-    
-      
-    #options.inputFiles = \
-    #'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_1.root', \
-    #'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_2.root', \
-    #'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_3.root', \
-    #'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_4.root', \
-    #'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_5.root', \
+    options.inputFiles = \
+    'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_1.root', \
+    'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_2.root', \
+    'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_3.root', \
+    'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_4.root', \
+    'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0000/EXO-RunIISummer16DR80Premix-03591_5.root', \
     
     
     
