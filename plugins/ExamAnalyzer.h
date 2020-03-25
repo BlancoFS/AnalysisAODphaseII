@@ -94,6 +94,7 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH1F* hTightMuons_noGen_vxy; 
   TH1F* hSoftMuons_noGen_vxy; 
   TH1F* hDispGlbMuons_vxy;
+  TH1F* hDispGlbMuons_noGen_vxy;
 
   TH1F* hGenMuons_vz;
   TH1F* hStaMuons_vz;
@@ -107,6 +108,7 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH1F* hTightMuons_noGen_vz; 
   TH1F* hSoftMuons_noGen_vz; 
   TH1F* hDispGlbMuons_vz;
+  TH1F* hDispGlbMuons_noGen_vz;
 
   TH1F* hGenMuons_vr;
   TH1F* hStaMuons_vr;
@@ -120,6 +122,7 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH1F* hTightMuons_noGen_vr; 
   TH1F* hSoftMuons_noGen_vr; 
   TH1F* hDispGlbMuons_vr;
+  TH1F* hDispGlbMuons_noGen_vr;
   
   TH1F* hGenMuons_eta;
   TH1F* hStaMuons_eta;
@@ -133,6 +136,7 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH1F* hTightMuons_noGen_eta;
   TH1F* hSoftMuons_noGen_eta;
   TH1F* hDispGlbMuons_eta;
+  TH1F* hDispGlbMuons_noGen_eta;
 
   TH1F* hGenMuons_phi;
   TH1F* hStaMuons_phi;
@@ -146,6 +150,7 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH1F* hTightMuons_noGen_phi;
   TH1F* hSoftMuons_noGen_phi;
   TH1F* hDispGlbMuons_phi;
+  TH1F* hDispGlbMuons_noGen_phi;
 
   TH1F* hGenMuons_pt;
   TH1F* hStaMuons_pt;
@@ -159,6 +164,7 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH1F* hTightMuons_noGen_pt;                                                                                                          
   TH1F* hSoftMuons_noGen_pt;
   TH1F* hDispGlbMuons_pt;
+  TH1F* hDispGlbMuons_noGen_pt;
 
   TH1F* hStaMuons_dR;
   TH1F* hTrkMuons_dR;
