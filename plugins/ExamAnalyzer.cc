@@ -440,15 +440,15 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       }
     }  // for..muons
 	  
-    for (reco::Track::const_iterator track = displacedGlobalMuons->begin(); track! = displacedGlobalMuons->end(); ++track){
+    for (size_t i = 0; i < displacedGlobalMuons->size(); i++){
 	    
-	    if (!track.innerOk()) continue;
-	    if (!track.outerOk()) continue;
+	    if (!(*displacedGlobalMuons)[i].innerOk()) continue;
+	    if (!(*displacedGlobalMuons)[i].outerOk()) continue;
 	    
-	    double trEta = track->eta();
-	    double trPhi = track->phi();
-	    double trPt  = track->pt();
-	    double trCharge = track->charge();
+	    double trEta = (*displacedGlobalMuons)[i].eta();
+	    double trPhi = (*displacedGlobalMuons)[i].phi();
+	    double trPt  = (*displacedGlobalMuons)[i].pt();
+	    double trCharge = (*displacedGlobalMuons)[i].charge();
 	    
 	    if (fabs(trEta) > 2.4) continue;
 	    if (trPt < pt_min) continue;
