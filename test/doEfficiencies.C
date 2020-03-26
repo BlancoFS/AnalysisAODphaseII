@@ -68,7 +68,7 @@ void		SetLegend(TLegend* lt,
 
 //Constructor of the class.
 
-void doEfficienciesND(TString name)
+void doEfficiencies(TString name)
 {
 	filename = name;
 	
