@@ -201,8 +201,8 @@ void DrawEfficiency(TString effType,
   canvas->Modified();
   canvas->Update();
 
-  if (doSavePdf) canvas->SaveAs(directory + "/" + file1name + "__vs__" + file2name + "__" + variable + "-" + effType + ".pdf");
-  if (doSavePng) canvas->SaveAs(directory + "/" + file1name + "__vs__" + file2name + "__" + variable + "-" + effType + ".png");
+  if (doSavePdf) canvas->SaveAs(directory + "/" + filename + variable + "-" + effType + ".pdf");
+  if (doSavePng) canvas->SaveAs(directory + "/" + filename + variable + "-" + effType + ".png");
 }
 
 
