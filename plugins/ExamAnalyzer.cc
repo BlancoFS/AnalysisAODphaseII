@@ -87,9 +87,9 @@ void ExampleMuonAnalyzer2::beginJob()
   hTightMuons_noGen_vxy = fileService->make<TH1F>("TightMuons_noGen_vxy", "", nbins_vxy, vxy_bins);
   hSoftMuons_noGen_vxy  = fileService->make<TH1F>("SoftMuons_noGen_vxy",  "", nbins_vxy, vxy_bins);
   hDispGlbMuons_vxy     = fileService->make<TH1F>("DispGlbMuons_vxy",    "", nbins_vxy, vxy_bins);
-  hDispGlbMuons_noGen_vxy     = fileService->make<TH1F>("DispGlbMuons_vxy",    "", nbins_vxy, vxy_bins);
+  hDispGlbMuons_noGen_vxy     = fileService->make<TH1F>("DispGlbMuons_noGen_vxy",    "", nbins_vxy, vxy_bins);
   hDispStaMuons_vxy     = fileService->make<TH1F>("DispStaMuons_vxy",     "", nbins_vxy, vxy_bins);
-  hDispStaMuons_noGen_vxy     = fileService->make<TH1F>("DispStaMuons_vxy",     "", nbins_vxy, vxy_bins);
+  hDispStaMuons_noGen_vxy     = fileService->make<TH1F>("DispStaMuons_noGen_vxy",     "", nbins_vxy, vxy_bins);
 
   hGenMuons_vz         = fileService->make<TH1F>("GenMuons_vz",         "", nbins_vz, vz_bins);
   hStaMuons_vz         = fileService->make<TH1F>("StaMuons_vz",         "", nbins_vz, vz_bins);
@@ -103,9 +103,9 @@ void ExampleMuonAnalyzer2::beginJob()
   hTightMuons_noGen_vz = fileService->make<TH1F>("TightMuons_noGen_vz", "", nbins_vz, vz_bins);
   hSoftMuons_noGen_vz  = fileService->make<TH1F>("SoftMuons_noGen_vz",  "", nbins_vz, vz_bins);
   hDispGlbMuons_vz     = fileService->make<TH1F>("DispGlbMuons_vz",    "", nbins_vz, vz_bins);
-  hDispGlbMuons_noGen_vz     = fileService->make<TH1F>("DispGlbMuons_vz",    "", nbins_vz, vz_bins);
+  hDispGlbMuons_noGen_vz     = fileService->make<TH1F>("DispGlbMuons_noGen_vz",    "", nbins_vz, vz_bins);
   hDispStaMuons_vz     = fileService->make<TH1F>("DispStaMuons_vz",     "", nbins_vz, vz_bins);
-  hDispStaMuons_noGen_vz     = fileService->make<TH1F>("DispStaMuons_vz",     "", nbins_vz, vz_bins);
+  hDispStaMuons_noGen_vz     = fileService->make<TH1F>("DispStaMuons_noGen_vz",     "", nbins_vz, vz_bins);
 
   hGenMuons_vr         = fileService->make<TH1F>("GenMuons_vr",         "", nbins_vr, vr_bins);
   hStaMuons_vr         = fileService->make<TH1F>("StaMuons_vr",         "", nbins_vr, vr_bins);
@@ -119,9 +119,9 @@ void ExampleMuonAnalyzer2::beginJob()
   hTightMuons_noGen_vr = fileService->make<TH1F>("TightMuons_noGen_vr", "", nbins_vr, vr_bins);
   hSoftMuons_noGen_vr  = fileService->make<TH1F>("SoftMuons_noGen_vr",  "", nbins_vr, vr_bins);
   hDispGlbMuons_vr     = fileService->make<TH1F>("DispGlbMuons_vr",    "", nbins_vr, vr_bins);
-  hDispGlbMuons_noGen_vr     = fileService->make<TH1F>("DispGlbMuons_vr",    "", nbins_vr, vr_bins);
+  hDispGlbMuons_noGen_vr     = fileService->make<TH1F>("DispGlbMuons_noGen_vr",    "", nbins_vr, vr_bins);
   hDispStaMuons_vr     = fileService->make<TH1F>("DispStaMuons_vr",     "", nbins_vr, vr_bins);
-  hDispStaMuons_noGen_vr     = fileService->make<TH1F>("DispStaMuons_vr",     "", nbins_vr, vr_bins);
+  hDispStaMuons_noGen_vr     = fileService->make<TH1F>("DispStaMuons_noGen_vr",     "", nbins_vr, vr_bins);
 
   hGenMuons_pt         = fileService->make<TH1F>("GenMuons_pt",         "", nbins_pt, pt_bins);
   hStaMuons_pt         = fileService->make<TH1F>("StaMuons_pt",         "", nbins_pt, pt_bins);
@@ -135,9 +135,9 @@ void ExampleMuonAnalyzer2::beginJob()
   hTightMuons_noGen_pt = fileService->make<TH1F>("TightMuons_noGen_pt", "", nbins_pt, pt_bins);
   hSoftMuons_noGen_pt  = fileService->make<TH1F>("SoftMuons_noGen_pt",  "", nbins_pt, pt_bins);
   hDispGlbMuons_pt     = fileService->make<TH1F>("DispGlbMuons_pt",    "", nbins_pt, pt_bins);
-  hDispGlbMuons_noGen_pt     = fileService->make<TH1F>("DispGlbMuons_pt",    "", nbins_pt, pt_bins);
+  hDispGlbMuons_noGen_pt     = fileService->make<TH1F>("DispGlbMuons_noGen_pt",    "", nbins_pt, pt_bins);
   hDispStaMuons_pt     = fileService->make<TH1F>("DispStaMuons_pt",     "", nbins_pt, pt_bins);
-  hDispStaMuons_noGen_pt     = fileService->make<TH1F>("DispStaMuons_pt",     "", nbins_pt, pt_bins);
+  hDispStaMuons_noGen_pt     = fileService->make<TH1F>("DispStaMuons_noGen_pt",     "", nbins_pt, pt_bins);
 
   hGenMuons_eta         = fileService->make<TH1F>("GenMuons_eta",         "", 100, -2.5, 2.5);
   hStaMuons_eta         = fileService->make<TH1F>("StaMuons_eta",         "", 100, -2.5, 2.5);
@@ -151,9 +151,9 @@ void ExampleMuonAnalyzer2::beginJob()
   hTightMuons_noGen_eta = fileService->make<TH1F>("TightMuons_noGen_eta", "", 100, -2.5, 2.5);
   hSoftMuons_noGen_eta  = fileService->make<TH1F>("SoftMuons_noGen_eta",  "", 100, -2.5, 2.5);
   hDispGlbMuons_eta     = fileService->make<TH1F>("DispGlbMuons_eta",    "", 100, -2.5, 2.5);
-  hDispGlbMuons_noGen_eta     = fileService->make<TH1F>("DispGlbMuons_eta",    "", 100, -2.5, 2.5);
+  hDispGlbMuons_noGen_eta     = fileService->make<TH1F>("DispGlbMuons_noGen_eta",    "", 100, -2.5, 2.5);
   hDispStaMuons_eta     = fileService->make<TH1F>("DispStaMuons_eta",     "", 100, -2.5, 2.5);
-  hDispStaMuons_noGen_eta     = fileService->make<TH1F>("DispStaMuons_eta",     "", 100, -2.5, 2.5);
+  hDispStaMuons_noGen_eta     = fileService->make<TH1F>("DispStaMuons_noGen_eta",     "", 100, -2.5, 2.5);
 
   hGenMuons_phi         = fileService->make<TH1F>("GenMuons_phi",         "", 100, -3.2, 3.2);
   hStaMuons_phi         = fileService->make<TH1F>("StaMuons_phi",         "", 100, -3.2, 3.2);
@@ -167,9 +167,9 @@ void ExampleMuonAnalyzer2::beginJob()
   hTightMuons_noGen_phi = fileService->make<TH1F>("TightMuons_noGen_phi", "", 100, -3.2, 3.2);
   hSoftMuons_noGen_phi  = fileService->make<TH1F>("SoftMuons_noGen_phi",  "", 100, -3.2, 3.2);
   hDispGlbMuons_phi     = fileService->make<TH1F>("DispGlbMuons_phi",    "", 100, -3.2, 3.2);
-  hDispGlbMuons_noGen_phi     = fileService->make<TH1F>("DispGlbMuons_phi",    "", 100, -3.2, 3.2);
+  hDispGlbMuons_noGen_phi     = fileService->make<TH1F>("DispGlbMuons_noGen_phi",    "", 100, -3.2, 3.2);
   hDispStaMuons_phi     = fileService->make<TH1F>("DispStaMuons_phi",    "", 100, -3.2, 3.2);
-  hDispStaMuons_noGen_phi     = fileService->make<TH1F>("DispStaMuons_phi",    "", 100, -3.2, 3.2);
+  hDispStaMuons_noGen_phi     = fileService->make<TH1F>("DispStaMuons_noGen_phi",    "", 100, -3.2, 3.2);
 
   hStaMuons_dR      = fileService->make<TH1F>("StaMuons_dR",   "", 100, 0, 4);
   hTrkMuons_dR      = fileService->make<TH1F>("TrkMuons_dR",   "", 100, 0, 4);
