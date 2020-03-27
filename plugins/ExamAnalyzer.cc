@@ -440,30 +440,28 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       }
     }  // for..muons
 	  
-    for (size_t i = 0; i < displacedGlobalMuons->size(); i++){
+    for (reco::TrackCollection::const_iterator track = displacedGlobalMuons->begin(); track < displacedGlobalMuons->end(); ++track){
+
+      //if (!track->innerOk()) continue;                                                                                                                                                
+      //if (!track->outerOk()) continue;                                                                                                                                                
+
+      double trEta = track->eta();
+      double trPhi = track->phi();
+      double trPt  = track->pt();
+      double trCharge = track->charge();
 	    
-	    if (!(*displacedGlobalMuons)[i].innerOk()) continue;
-	    if (!(*displacedGlobalMuons)[i].outerOk()) continue;
-	    
-	    double trEta = (*displacedGlobalMuons)[i].eta();
-	    double trPhi = (*displacedGlobalMuons)[i].phi();
-	    double trPt  = (*displacedGlobalMuons)[i].pt();
-	    double trCharge = (*displacedGlobalMuons)[i].charge();
-	    
-	    if (fabs(trEta) > 2.4) continue;
-	    if (trPt < pt_min) continue;
-	    
-	    double dPhi = trPhi - phi;
-	    double dEta = trEta - eta;
-	    
-	    double dR = sqrt(dPhi*dPhi + dEta*dEta);
-	    
-	    if (dR < dispGlb_min_deltaR) {
-		    dispGlb_min_deltaR = dR;
-		    dispGlb_pt_resolution = ((trCharge/trPt) - (charge/pt)) / (charge/pt);
-	    }
-    }
-	    
+      if (fabs(trEta) > 2.4) continue;
+      if (trPt < pt_min)     continue;
+
+      double dPhi = trPhi - phi;
+      double dEta = trEta - eta;
+
+      double dR = sqrt(dPhi*dPhi + dEta*dEta);
+
+      if (dR < dispGlb_min_deltaR) {
+        dispGlb_min_deltaR = dR;
+      }
+    }//for...displacedGlobalMuons collection	    
 
 
     // Fill gen histograms
