@@ -60,7 +60,8 @@ process.muonAnalysis = cms.EDAnalyzer("ExampleMuonAnalyzer2",
                                       genCollection = cms.InputTag("genParticles"),
                                       vertices = cms.InputTag("offlinePrimaryVertices"),
                                       beamSpot = cms.InputTag("offlineBeamSpot"),
-                                      dispGlbTracks = cms.InputTag("displacedGlobalMuons")
+                                      dispGlbTracks = cms.InputTag("displacedGlobalMuons"),
+                                      dispStaTracks = cms.InputTag("displacedStandAloneMuons")
                                       )
 
 process.p = cms.Path(process.muonAnalysis)
