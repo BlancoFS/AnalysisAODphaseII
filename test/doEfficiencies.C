@@ -29,6 +29,7 @@ Bool_t         draw_glb   = true;
 Bool_t         draw_tight = false;
 Bool_t         draw_soft  = false;
 Bool_t         draw_disp  = true;
+Bool_t	       draw_dispSta = true;
 
 
 TString        directory = "displaced-muons";
@@ -87,17 +88,8 @@ void doEfficiencies(TString name)
 	
 	
 	DrawEfficiency("efficiency", "vxy", "gen production distance in xy [cm]");
-	DrawEfficiency("efficiency", "vxy", "gen production distance in xy [cm]");
-	DrawEfficiency("efficiency", "vxy", "gen production distance in xy [cm]");
-  DrawEfficiency("efficiency", "vxy", "gen production distance in xy [cm]");
 	
 	DrawEfficiency("efficiency", "vz", "gen production distance in z [cm]");
-	DrawEfficiency("efficiency", "vz", "gen production distance in z [cm]");
-	DrawEfficiency("efficiency", "vz", "gen production distance in z [cm]");
-  DrawEfficiency("efficiency", "vz", "gen production distance in z [cm]");
-  
-  
-  
   
 }
 
@@ -143,6 +135,7 @@ void DrawEfficiency(TString effType,
   TGraphAsymmErrors* tight_efficiency = MakeEfficiency(effType, "Tight", variable, file, kGreen+2,  kFullCircle);
   TGraphAsymmErrors* soft_efficiency  = MakeEfficiency(effType, "Soft",  variable, file, kOrange+7, kFullCircle);
   TGraphAsymmErrors* dispGlb_efficiency = MakeEfficiency(effType, "DispGlb", variable, file, kBlue, kOpenCircle);
+  TGraphAsymmErrors* dispSta_efficiency = MakeEfficiency(effType, "DispSta", variable, file, kBlack, kPlus);
   
   
   // Canvas settings
@@ -166,7 +159,7 @@ void DrawEfficiency(TString effType,
   if (draw_tight) mg->Add(tight_efficiency);
   if (draw_soft) mg->Add(soft_efficiency);
   if (draw_disp) mg->Add(dispGlb_efficiency);
-  
+  if (draw_dispSta) mg->Add(dispSta_efficiency);
   
   
   mg->Draw("apz");
@@ -193,6 +186,7 @@ void DrawEfficiency(TString effType,
   if (draw_tight) legend->AddEntry(tight_efficiency, " tight", "lp");
   if (draw_soft) legend->AddEntry(soft_efficiency, " soft", "lp");
   if (draw_disp) legend->AddEntry(dispGlb_efficiency, "DisplacedGlobalMuons", "lp");
+  if (draw_dispSta) legend->AddEntry(dispSta_efficiency, "DisplacedStandAloneMuons", "lp");
   
   
   legend->Draw();
