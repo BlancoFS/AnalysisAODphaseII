@@ -44,6 +44,10 @@ if 'BSMH_CTau-400' in options.inputDataset :
         'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0001/EXO-RunIISummer16DR80Premix-03591_'+str(i)+'.root', \
 
     for i in range(2000,3000):
+        if i == 2004:
+          continue
+        if i == 2271:
+          continue
         options.inputFiles = \
         'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0002/EXO-RunIISummer16DR80Premix-03591_'+str(i)+'.root', \
 
@@ -60,6 +64,8 @@ if 'BSMH_CTau-400' in options.inputDataset :
         'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0005/EXO-RunIISummer16DR80Premix-03591_'+str(i)+'.root', \
 
     for i in range(6000,7000):
+        if i == 6728:
+          continue
         options.inputFiles = \
         'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0006/EXO-RunIISummer16DR80Premix-03591_'+str(i)+'.root', \
 
@@ -68,10 +74,16 @@ if 'BSMH_CTau-400' in options.inputDataset :
         'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0007/EXO-RunIISummer16DR80Premix-03591_'+str(i)+'.root', \
 
     for i in range(8000,9000):
+        if i == 8045:
+          continue
+        if i == 8758:
+          continue
         options.inputFiles = \
         'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0008/EXO-RunIISummer16DR80Premix-03591_'+str(i)+'.root', \
 
-    for i in range(9000,10000):
+    for i in range(9000,9972):
+        if i == 9600:
+          continue
         options.inputFiles = \
         'file:' + samplesPath + 'H2ToLLPXToLeptons_MH_400_MX_50_ctau_400mm_TuneCP2_13TeV_pythia8_80X_13082019-1313/400-50-400_HXX_RunIISummer16DR80Premix_step2_230220-1650/200224_233912/0009/EXO-RunIISummer16DR80Premix-03591_'+str(i)+'.root', \
 
