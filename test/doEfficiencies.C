@@ -110,6 +110,7 @@ TGraphAsymmErrors* MakeEfficiency(TString effType,
   TH1F* hnum = (TH1F*)(file->Get(num_name + variable))->Clone("hnum");
   TH1F* hden = (TH1F*)(file->Get(den_name + variable))->Clone("hden");
 
+
   TGraphAsymmErrors* tgae = new TGraphAsymmErrors(hnum, hden);
 
   tgae->SetLineColor  (color);
