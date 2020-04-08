@@ -189,6 +189,8 @@ void ExampleMuonAnalyzer2::beginJob()
     hGlbMuons_pt_resolution  [i] = fileService->make<TH2F>(Form("GlbMuons_pt_resolution_pt%d",   i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
     hTightMuons_pt_resolution[i] = fileService->make<TH2F>(Form("TightMuons_pt_resolution_pt%d", i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
     hSoftMuons_pt_resolution [i] = fileService->make<TH2F>(Form("SoftMuons_pt_resolution_pt%d",  i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
+    hDispGlbMuons_pt_resolution[i] = fileService->make<TH2F>(Form("DispGlbMuons_pt_resolution_pt%d", i, "", nbins_vxy, vxy_bins, 120, -0.15, 0.15));
+    hDispStaMuons_pt_resolution[i] = fileService->make<TH2F>(Form("DispStaMuons_pt_resolution_pt%d", i, "", nbins_vxy, vxy_bins, 120, -0.15, 0.15));
   }
 
   hMuPFChargeIso  = fileService->make<TH1F>("MuPFChargeIso",  "#DeltaR=0.4 PFChargeIso",  200, 0, 1);
@@ -326,6 +328,8 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
     Float_t glb_pt_resolution     = -999;
     Float_t tight_pt_resolution   = -999;
     Float_t soft_pt_resolution    = -999;
+    Float_t dispGlb_pt_resolution = -999;
+    Float_t dispSta_pt_resolution = -999;
     
     
     
@@ -488,6 +492,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 
       if (dR < dispGlb_min_deltaR) {
         dispGlb_min_deltaR = dR;
+	dispGlb_pt_resolution = ((trCharge/trPt) - (charge/pt)) / (charge/pt);
       }
     }//for...displacedGlobalMuons collection	
 	  
@@ -513,6 +518,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 
       if (dR < dispSta_min_deltaR) {
         dispSta_min_deltaR = dR;
+	dispSta_pt_resolution = ((itrCharge/itrPt) - (charge/pt)) / (charge/pt);
       }
     }
 
@@ -717,6 +723,8 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 		      hDispGlbMuons_eta->Fill(eta);
 		      hDispGlbMuons_phi->Fill(phi);
 		      hDispGlbMuons_pt->Fill(pt);
+		      for (Int_t i=0; i<nbins_pt; i++)
+	      		if (pt >= pt_bins[i] && pt < pt_bins[i+1]) hDispGlbMuons_pt_resolution[i]->Fill(vxy, dispGlb_pt_resolution);
 	      }
 	      else
 	      {
@@ -742,6 +750,8 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 		      hDispStaMuons_eta->Fill(eta);
 		      hDispStaMuons_phi->Fill(phi);
 		      hDispStaMuons_pt->Fill(pt);
+		      for (Int_t i=0; i<nbins_pt; i++)
+	      		if (pt >= pt_bins[i] && pt < pt_bins[i+1]) hDispStaMuons_pt_resolution[i]->Fill(vxy, dispSta_pt_resolution);
 	      }
 	      else
 	      {
