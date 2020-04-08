@@ -1,7 +1,7 @@
 # AnalysisAODphaseII
 
 
-Instructions to execute the analyzer.
+This analyzer computes the efficiencies in the muon reconstruction of AOD samples. The next part explain the instructions to execute the code. 
 
 First, log in gridui:
 
