@@ -189,8 +189,8 @@ void ExampleMuonAnalyzer2::beginJob()
     hGlbMuons_pt_resolution  [i] = fileService->make<TH2F>(Form("GlbMuons_pt_resolution_pt%d",   i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
     hTightMuons_pt_resolution[i] = fileService->make<TH2F>(Form("TightMuons_pt_resolution_pt%d", i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
     hSoftMuons_pt_resolution [i] = fileService->make<TH2F>(Form("SoftMuons_pt_resolution_pt%d",  i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
-    hDispGlbMuons_pt_resolution[i] = fileService->make<TH2F>(Form("DispGlbMuons_pt_resolution_pt%d", i, "", nbins_vxy, vxy_bins, 120, -0.15, 0.15));
-    hDispStaMuons_pt_resolution[i] = fileService->make<TH2F>(Form("DispStaMuons_pt_resolution_pt%d", i, "", nbins_vxy, vxy_bins, 120, -0.15, 0.15));
+    hDispGlbMuons_pt_resolution[i] = fileService->make<TH2F>(Form("DispGlbMuons_pt_resolution_pt%d", i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
+    hDispStaMuons_pt_resolution[i] = fileService->make<TH2F>(Form("DispStaMuons_pt_resolution_pt%d", i), "", nbins_vxy, vxy_bins, 120, -0.15, 0.15);
   }
 
   hMuPFChargeIso  = fileService->make<TH1F>("MuPFChargeIso",  "#DeltaR=0.4 PFChargeIso",  200, 0, 1);
