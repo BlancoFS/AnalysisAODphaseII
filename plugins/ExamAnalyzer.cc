@@ -55,6 +55,10 @@ void ExampleMuonAnalyzer2::beginJob()
   TH2::SetDefaultSumw2();
 
   edm::Service<TFileService> fileService;
+	
+  //Vertex histogram:
+  vertexType = fileService->make<TH1F>("typeOfVertex", "", 2, 0 , 1);
+  //-----------------------------------------------------------     
 
   h_dxy = fileService->make<TH1F>("dxy", "",  100, -0.1,     0.1);
   h_dz  = fileService->make<TH1F>("dz",  "",  100, -0.1,     0.1);
@@ -241,6 +245,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
   if (theIndexOfThePrimaryVertex < 300) {
     posVtx = ((*vertices)[theIndexOfThePrimaryVertex]).position();
     errVtx = ((*vertices)[theIndexOfThePrimaryVertex]).error();
+    vertexType->AddBinContent(1);
   }
   else if (beamSpot.isValid()) {
     LogInfo("ExampleMuonAnalyzer") << "reco::PrimaryVertex not found, use BeamSpot position instead\n";
@@ -249,6 +254,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
     errVtx(0,0) = bs.BeamWidthX();
     errVtx(1,1) = bs.BeamWidthY();
     errVtx(2,2) = bs.sigmaZ();
+    vertexType->AddBinContent(2);
   }
     
   const reco::Vertex thePrimaryVertex(posVtx,errVtx);
@@ -264,12 +270,12 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
   event.getByToken(genToken, genParticles);
   
 	
-  //Handle to the Displaced global muons track collection.
+  //Handle the Displaced global muons track collection.
   Handle<reco::TrackCollection> displacedGlobalMuons;
   event.getByToken(dispToken, displacedGlobalMuons);
 	
 	
-  //Handle to displaced StandAlone Muons track collection.                                                                                                                                                  
+  //Handle the displaced StandAlone Muons track collection.                                                                                                                                                  
   Handle<reco::TrackCollection>	displacedStandAloneMuons;
   event.getByToken(dispStaToken, displacedStandAloneMuons);
 
@@ -340,7 +346,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 	    
 	    
 	    
-	          // isStandAloneMuon
+      // isStandAloneMuon
       //------------------------------------------------------------------------
       if (muon->isStandAloneMuon()) {
      
@@ -460,10 +466,12 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       }
     }  // for..muons
 	  
+    //Loop over the displacedGlobalMuons collection. 
+    //Is displacedGlobalMuon:	  
     for (reco::TrackCollection::const_iterator track = displacedGlobalMuons->begin(); track < displacedGlobalMuons->end(); ++track){
 
-      //if (!track->innerOk()) continue;                                                                                                                                                
-      //if (!track->outerOk()) continue;                                                                                                                                                
+      if (!track->innerOk()) continue;                                                                                                                                                
+      if (!track->outerOk()) continue;                                                                                                                                                
 
       double trEta = track->eta();
       double trPhi = track->phi();
@@ -483,10 +491,12 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       }
     }//for...displacedGlobalMuons collection	
 	  
+    //Loop over the displacedStandAloneMuons collection.
+    //Is displacedStandAlone:
     for (reco::TrackCollection::const_iterator itrack = displacedStandAloneMuons->begin(); itrack < displacedStandAloneMuons->end(); ++itrack){
 
-      //if (!itrack->innerOk()) continue;                                                                                                                                                
-      //if (!itrack->outerOk()) continue;                                                                                                                                                
+      if (!itrack->innerOk()) continue;                                                                                                                                                
+      if (!itrack->outerOk()) continue;                                                                                                                                                
 
       double itrEta = itrack->eta();
       double itrPhi = itrack->phi();
@@ -661,7 +671,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 	  }
       }
 
-	  // Fill soft histograms
+    // Fill soft histograms
     //--------------------------------------------------------------------------
     if (soft_min_deltaR < 999)
       {
@@ -693,6 +703,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 	    hSoftMuons_noGen_vxy_vz->Fill(vxy,fabs(vz));
 	  }
       }
+      //Fill displacedGlobal histograms
       if (dispGlb_min_deltaR < 999) 
       {
 	      
@@ -717,6 +728,7 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 		      hDispGlbMuons_noGen_pt->Fill(pt);  
 	      }
       }
+      //Fill displacedStandAlone histograms.
       if (dispSta_min_deltaR < 999) 
       {
 	      
