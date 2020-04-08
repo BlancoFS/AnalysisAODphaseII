@@ -194,6 +194,8 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH2F* hGlbMuons_pt_resolution  [nbins_pt];
   TH2F* hTightMuons_pt_resolution[nbins_pt];
   TH2F* hSoftMuons_pt_resolution [nbins_pt];
+  TH2F* hDispGlbMuons_pt_resolution [nbins_pt];
+  TH2F* hDispStaMuons_pt_resolution [nbins_pt];
 
   TH1F* hMuPFChargeIso; 
   TH1F* hMuPFNeutralIso;
