@@ -47,23 +47,23 @@ TString        filename;
 //functions of the class: -------------------------------------------------------
 
 TGraphAsymmErrors* MakeEfficiency(TString  effType,
-				                          TString  muonType,
-				                          TString  variable,
-				                          TFile*   file,
-				                          Color_t  color,
-				                          Style_t  style);
+				  TString  muonType,
+				  TString  variable,
+				  TFile*   file,
+				  Color_t  color,
+				  Style_t  style);
 
 
 
 void 		DrawEfficiency(TString effType,
-			                 TString variable,
-			                 TString xtitle);
+			       TString variable,
+			       TString xtitle);
                        
                        
                        
 
 void		SetLegend(TLegend* lt,
-			            Size_t tsize);
+			  Size_t tsize);
 
 //-----------------------------------------------------------------------------
 
@@ -71,27 +71,31 @@ void		SetLegend(TLegend* lt,
 
 void doEfficiencies(TString name)
 {
-	filename = name;
 	
-	printf("\n");
+  filename = name;
+	
+  printf("\n");
   printf(" filename = %s\n", filename.Data());
   printf("\n");
 
   gInterpreter->ExecuteMacro("PaperStyle.C");
 	
-	if (doSavePdf) gSystem->mkdir(directory, kTRUE);
-	if (doSavePng) gSystem->mkdir(directory, kTRUE);
-	
-	TH1::SetDefaultSumw2();
-	
-	file = TFile::Open("rootfiles/" + filename + ".root");
-	
-	
-	DrawEfficiency("efficiency", "vxy", "gen production distance in xy [cm]");
-	
-	DrawEfficiency("efficiency", "vz", "gen production distance in z [cm]");
+  if (doSavePdf) gSystem->mkdir(directory, kTRUE);
+  if (doSavePng) gSystem->mkdir(directory, kTRUE);
+  
+  TH1::SetDefaultSumw2();
+  
+  file = TFile::Open("rootfiles/" + filename + ".root");
+  
+  
+  DrawEfficiency("efficiency", "vxy", "gen production distance in xy [cm]");
+  DrawEfficiency("efficiency", "vz", "gen production distance in z [cm]");
+  DrawEfficiency("efficiency", "eta", "gen production vs eta");
+  DrawEfficiency("efficiency", "pt", "gen production vs pt");
+  DrawEfficiency("efficiency", "vr", "gen production distance in r [cm]");
   
 }
+
 
 
 TGraphAsymmErrors* MakeEfficiency(TString effType,
@@ -110,7 +114,7 @@ TGraphAsymmErrors* MakeEfficiency(TString effType,
   TH1F* hnum = (TH1F*)(file->Get(num_name + variable))->Clone("hnum");
   TH1F* hden = (TH1F*)(file->Get(den_name + variable))->Clone("hden");
 
-
+	
   TGraphAsymmErrors* tgae = new TGraphAsymmErrors(hnum, hden);
 
   tgae->SetLineColor  (color);
@@ -125,8 +129,8 @@ TGraphAsymmErrors* MakeEfficiency(TString effType,
 
 //DrawEfficiencies function, represents the num and den of the efficiency's histogram.
 void DrawEfficiency(TString effType,
-		                TString variable,
-		                TString xtitle)
+		    TString variable,
+		    TString xtitle)
 {
   
 
@@ -136,7 +140,7 @@ void DrawEfficiency(TString effType,
   TGraphAsymmErrors* tight_efficiency = MakeEfficiency(effType, "Tight", variable, file, kGreen+2,  kFullCircle);
   TGraphAsymmErrors* soft_efficiency  = MakeEfficiency(effType, "Soft",  variable, file, kOrange+7, kFullCircle);
   TGraphAsymmErrors* dispGlb_efficiency = MakeEfficiency(effType, "DispGlb", variable, file, kBlue, kOpenCircle);
-  TGraphAsymmErrors* dispSta_efficiency = MakeEfficiency(effType, "DispSta", variable, file, kBlack, kPlus);
+  TGraphAsymmErrors* dispSta_efficiency = MakeEfficiency(effType, "DispSta", variable, file, kBlack, kOpenCircle);
   
   
   // Canvas settings
@@ -187,7 +191,7 @@ void DrawEfficiency(TString effType,
   if (draw_tight) legend->AddEntry(tight_efficiency, " tight", "lp");
   if (draw_soft) legend->AddEntry(soft_efficiency, " soft", "lp");
   if (draw_disp) legend->AddEntry(dispGlb_efficiency, "DisplacedGlobalMuons", "lp");
-  if (draw_dispSta) legend->AddEntry(dispSta_efficiency, "DisplacedStandAloneMuons", "lp");
+  if (draw_dispSta) legend->AddEntry(dispSta_efficiency, "DisplacedStandAlone", "lp");
   
   
   legend->Draw();
