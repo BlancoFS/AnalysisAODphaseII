@@ -283,7 +283,8 @@ void Compare(TString hname,
   // Save
   //----------------------------------------------------------------------------
   canvas->GetFrame()->DrawClone();
-  if (doSavePng) canvas->SaveAs(directory + "/" + file1name + "__vs__" + file2name + "__compare-" + hname + ".png");
+  if (doSavePng) canvas->SaveAs(directory + "/" + filename + "__compare-" + hname + ".png");
+  if (doSavePdf) canvas->SaveAs(directory + "/" + filename + "__compare-" + hname + ".pdf");
 }
 
 
