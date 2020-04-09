@@ -247,13 +247,10 @@ void Compare(TString hname,
   hist1 = (TH1F*)(file->Get("muonAnalysis/" + hname))->Clone("hist1_" + hname);
 
   hist1->Scale(1. / hist1->Integral(-1, -1));
-  hist2->Scale(1. / hist2->Integral(-1, -1));
 
   hist1->SetLineColor(kBlack);
-  hist2->SetLineColor(kRed+1);
 
   hist1->SetLineWidth(2);
-  hist2->SetLineWidth(2);
 
 
   // Draw
