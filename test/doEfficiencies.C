@@ -58,8 +58,13 @@ TGraphAsymmErrors* MakeEfficiency(TString  effType,
 void 		DrawEfficiency(TString effType,
 			       TString variable,
 			       TString xtitle);
+
+void               Compare(TString  hname,
+			   TString  xtitle,
+			   Bool_t   setlogy = true);
                        
                        
+TH1F* 		AddOverflow(TH1F* hist);
                        
 
 void		SetLegend(TLegend* lt,
@@ -93,6 +98,27 @@ void doEfficiencies(TString name)
   DrawEfficiency("efficiency", "eta", "gen production vs eta");
   DrawEfficiency("efficiency", "pt", "gen production vs pt");
   DrawEfficiency("efficiency", "vr", "gen production distance in r [cm]");
+	
+	
+	
+  Compare("dxy", "gen dxy [cm]");
+  Compare("dz",  "gen dz [cm]");
+  Compare("vxy", "gen production distance in xy [cm]");
+  Compare("vz",  "gen production distance in z [cm]");
+  Compare("vr",  "gen production distance in xyz [cm]");
+  Compare("pt",  "gen p_{T} [GeV]", false);
+  Compare("MuPFIso",        "muon PF isolation");
+  Compare("MuPFChargeIso",  "muon charged PF isolation");
+  Compare("MuPFNeutralIso", "muon neutral PF isolation");
+  Compare("MuPFPhotonIso",  "muon photon PF isolation");
+  Compare("MuPFPUIso",      "muon PU PF isolation");
+  if (draw_sta)   Compare("StaMuons_dR",   "#DeltaR(gen, standalone)");
+  if (draw_trk)   Compare("TrkMuons_dR",   "#DeltaR(gen, tracker)");
+  if (draw_glb)   Compare("GlbMuons_dR",   "#DeltaR(gen, global)");
+  if (draw_tight) Compare("TightMuons_dR", "#DeltaR(gen, tight)");
+  if (draw_soft)  Compare("SoftMuons_dR",  "#DeltaR(gen, soft)");
+  if (draw_disp)  Compare("DispGlbMuons_dR", "#DeltaR(gen, displacedGlobal)");
+  if (draw_dispSta) Compare("DispStaMuons_dR", "DeltaR(gen, displacedStandAlone)");
   
 }
 
@@ -202,6 +228,102 @@ void DrawEfficiency(TString effType,
 
   if (doSavePdf) canvas->SaveAs(directory + "/" + filename + variable + "-" + effType + ".pdf");
   if (doSavePng) canvas->SaveAs(directory + "/" + filename + variable + "-" + effType + ".png");
+}
+
+
+
+
+//------------------------------------------------------------------------------
+//
+// Compare
+//
+//------------------------------------------------------------------------------
+void Compare(TString hname,
+	     TString xtitle,
+	     Bool_t  setlogy)
+{
+  TH1F* hist1 = NULL;
+
+  hist1 = (TH1F*)(file->Get("muonAnalysis/" + hname))->Clone("hist1_" + hname);
+
+  hist1->Scale(1. / hist1->Integral(-1, -1));
+  hist2->Scale(1. / hist2->Integral(-1, -1));
+
+  hist1->SetLineColor(kBlack);
+  hist2->SetLineColor(kRed+1);
+
+  hist1->SetLineWidth(2);
+  hist2->SetLineWidth(2);
+
+
+  // Draw
+  //----------------------------------------------------------------------------
+  TCanvas* canvas = new TCanvas("compare " + hname,
+				"compare " + hname);
+
+  canvas->SetLogy(setlogy);
+
+  TH1F* hist1_overflow = AddOverflow(hist1);
+  
+  hist1_overflow->Draw("hist");
+  hist1_overflow->GetXaxis()->SetTitle(xtitle);
+
+
+  // Legend
+  //----------------------------------------------------------------------------
+  TLegend* legend = new TLegend(0.64, 0.78, 0.80, 0.89);
+
+  SetLegend(legend, 0.03);
+
+  legend->AddEntry(hist1_overflow, " " + filename, "l");
+
+  legend->Draw();
+
+
+  // Save
+  //----------------------------------------------------------------------------
+  canvas->GetFrame()->DrawClone();
+  if (doSavePng) canvas->SaveAs(directory + "/" + file1name + "__vs__" + file2name + "__compare-" + hname + ".png");
+}
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+//Add overflow
+//------------------------------------------------------------------------------
+
+TH1F* AddOverflow(TH1F* hist)
+{
+  TString  name = hist->GetName();
+  Int_t    nx   = hist->GetNbinsX()+1;
+  Double_t bw   = hist->GetBinWidth(nx);
+  Double_t x1   = hist->GetBinLowEdge(1);
+  Double_t x2   = hist->GetBinLowEdge(nx) + bw;
+  
+  // Book a new histogram having an extra bin for overflows
+  TH1F* htmp = new TH1F(name + "_overflow", "", nx, x1, x2);
+
+  // Fill the new histogram including the extra bin for overflows
+  for (Int_t i=1; i<=nx; i++) {
+    htmp->Fill(htmp->GetBinCenter(i), hist->GetBinContent(i));
+  }
+
+  // Fill the underflow
+  htmp->Fill(x1-1, hist->GetBinContent(0));
+
+  // Restore the number of entries
+  htmp->SetEntries(hist->GetEffectiveEntries());
+
+  // Cosmetics
+  htmp->SetLineColor(hist->GetLineColor());
+  htmp->SetLineWidth(hist->GetLineWidth());
+  htmp->GetXaxis()->SetTitleOffset(1.5);
+
+  return htmp;
 }
 
 
