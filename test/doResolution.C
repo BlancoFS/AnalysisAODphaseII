@@ -280,9 +280,16 @@ void DrawResolution(TString muonType,
 void DrawCompare(TString filename)
 {
 	
+	TH1F* h_resolution1[nbins_pt];
+	TH1F* h_resolution2[nbins_pt];
+	TH1F* h_resolution3[nbins_pt];
+	TH1F* h_resolution4[nbins_pt];
+	TH1F* h_resolution5[nbins_pt];
+	
+	
 	for (Int_t i=0; i<nbins_pt; i++) {
 		
-		ymax = 0;
+		Float_t ymax = 0;
 		
 		TH2F hm1 = (TH2F*)file->Get("muonAnalysis/StaMuons_resolution_pt%d", i);
 		TString hname1 = Form("%s_%s_vxy", hm1->GetName(), filename.Data());
