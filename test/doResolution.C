@@ -348,7 +348,7 @@ void DrawCompare(TString filename)
 		mg->SetMaximum(ymax);
 		
 		mg->SetTitle("");
-  		mg->GetXaxis()->SetTitle(" %.0f < p_{T} < %.0f GeV: #Deltaq/p_{T} / (q/p_{T})", pt_bins[i], pt_bins[i+1]));
+  		mg->GetXaxis()->SetTitle(Form(" %.0f < p_{T} < %.0f GeV: #Deltaq/p_{T} / (q/p_{T})", pt_bins[i], pt_bins[i+1])));
   		mg->GetYaxis()->SetTitle("entries / bin");
  		mg->GetXaxis()->SetTitleOffset(1.5);
  		mg->GetYaxis()->SetTitleOffset(2.0);
