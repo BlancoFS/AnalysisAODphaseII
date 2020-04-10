@@ -308,8 +308,8 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
     if (pt < pt_min) continue;
     
     
-    Float_t dxy = vxy;
-    Float_t dz  = vz;
+    Float_t dxy = fabs(vxy);
+    Float_t dz  = fabs(vz);
     
     
     
