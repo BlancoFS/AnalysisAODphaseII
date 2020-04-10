@@ -57,28 +57,32 @@ TString        filename;
 // Member functions
 //------------------------------------------------------------------------------
 void          DrawMultiGraph(TMultiGraph* mg,
-			                       TString      title);
+			     TString      title);
 
 void          DrawResolution(TString      muonType,
-			                       TString      xtitle,
-			                       TString      filename,
-			                       Color_t      color
+			     TString      xtitle,
+			     TString      filename,
+			     Color_t      color
                              Style_t      gr_style);
 
+
+void 	      DrawCompare(TString filename);
+
+
 void          SetLegend     (TLegend*     tl,
-			                       Size_t       tsize);
+			     Size_t       tsize);
 
 TGraphErrors* SetGraph      (Int_t        npoints,
-			                       Color_t      color,
-			                       Style_t      style);
+			     Color_t      color,
+			     Style_t      style);
 
 void          DrawLatex     (Font_t       tfont,
-			                       Float_t      x,
-			                       Float_t      y,
-			                       Float_t      tsize,
-			                       Short_t      align,
-			                       const char*  text,
-			                       Bool_t       setndc = true);
+			     Float_t      x,
+			     Float_t      y,
+			     Float_t      tsize,
+			     Short_t      align,
+			     const char*  text,
+			     Bool_t       setndc = true);
 
 
 //------------------------------------------------------------------------------
@@ -123,6 +127,8 @@ void doResolution(TString name)
   if (draw_soft)  DrawResolution("Soft",  "soft muons",       filename, kOrange+7, kFullCircle);
   if (draw_disp)  DrawResolution("DispGlb", "displacedGlobal", filename, kBlue, kOpenCircle);
   if (draw_dispSta) DrawResolution("DispSta", "displacedStandAlone", filename, kBlack, kOpenCircle);
+	
+  DrawCompare(filename);
 
 
   DrawMultiGraph(mg_mean,  "mean");
@@ -263,6 +269,109 @@ void DrawResolution(TString muonType,
   if (doSavePdf) canvas->SaveAs(directory + "/resolution_" + muonType + "_" + filename + ".pdf");
   if (doSavePng) canvas->SaveAs(directory + "/resolution_" + muonType + "_" + filename + ".png");
 }
+
+
+
+//-------------------------------------------------------------
+//Draw compare histograms:
+//-------------------------------------------------------------
+
+
+void DrawCompare(TString filename)
+{
+	
+	for (Int_t i=0; i<nbins_pt; i++) {
+		
+		ymax = 0;
+		
+		TH2F hm1 = (TH2F*)file->Get("muonAnalysis/StaMuons_resolution_pt%d", i);
+		TString hname1 = Form("%s_%s_vxy", hm1->GetName(), filename.Data());
+		h_resolution1[i] = (TH1F*)hm1->ProyectionY(hname1); 
+		
+		TH2F hm2 = (TH2F*)file->Get("muonAnalysis/TrkMuons_resolution_pt%d", i);
+		TString hname2 = Form("%s_%s_vxy", hm2->GetName(), filename.Data());
+		h_resolution2[i] = (TH1F*)hm2->ProyectionY(hname2);
+		
+		TH2F hm3 = (TH2F*)file->Get("muonAnalysis/GlbMuons_resolution_pt%d", i);
+		TString hname3 = Form("%s_%s_vxy", hm3->GetName(), filename.Data());
+		h_resolution3[i] = (TH1F*)hm3->ProyectionY(hname3);
+		
+		TH2F hm4 = (TH2F*)file->Get("muonAnalysis/DispGlbMuons_resolution_pt%d", i);
+		TString hname4 = Form("%s_%s_vxy", hm4->GetName(), filename.Data());
+		h_resolution4[i] = (TH1F*)hm4->ProyectionY(hname4);
+		
+		TH2F hm5 = (TH2F*)file->Get("muonAnalysis/DispStaMuons_resolution_pt%d", i);
+		TString hname5 = Form("%s_%s_vxy", hm5->GetName(), filename.Data());
+		h_resolution5[i] = (TH1F*)hm5->ProyectionY(hname5);
+		
+		
+		
+		Float_t max[5] = {h_resolution1->GetMaximum(), h_resolution2->GetMaximum(), h_resolution3->GetMaximum(), h_resolution4->GetMaximum(), h_resolution5->GetMaximum()};
+		
+		for (Int_t k = 0; k< 5; k++){
+			
+			if (max[k] > ymax){
+				ymax = max[k];
+			}
+		}
+		
+		h_resolution1[i]->SetLineColor(kBlack);
+		h_resolution2[i]->SetLineColor(kRed);
+		h_resolution3[i]->SetLineColor(kBlue);
+		h_resolution4[i]->SetLineColor(kGreen);
+		h_resolution5[i]->SetLineColor(kOrange);
+		
+		h_resolution1[i]->SetLineWidth(2);
+		h_resolution2[i]->SetLineWidth(2);
+		h_resolution3[i]->SetLineWidth(2);
+		h_resolution4[i]->SetLineWidth(2);
+		h_resolution5[i]->SetLineWidth(2);
+		
+		TMultiGraph* mg = new TMultiGraph();
+		
+		if (draw_sta) mg->Add(h_resolution1[i]);
+		if (draw_trk) mg->Add(h_resolution2[i]);
+		if (draw_glb) mg->Add(h_resolution3[i]);
+		if (draw_disp) mg->Add(h_resolution4[i]);
+		if (draw_dispSta) mg->Add(h_resolution5[i]);
+		
+		mg->Draw("apz");
+		
+		mg->SetMinimum(0.0);
+		mg->SetMaximum(ymax);
+		
+		mg->SetTitle("");
+  		mg->GetXaxis()->SetTitle(" %.0f < p_{T} < %.0f GeV: #Deltaq/p_{T} / (q/p_{T})", pt_bins[i], pt_bins[i+1]));
+  		mg->GetYaxis()->SetTitle("entries / bin");
+ 		mg->GetXaxis()->SetTitleOffset(1.5);
+ 		mg->GetYaxis()->SetTitleOffset(2.0);
+		
+		TLegend* legend = new TLegend(0.74, 0.5, 0.90, 0.91);
+
+  		SetLegend(legend, 0.025);
+		
+		if (draw_sta) mg->AddEntry(h_resolution1, "Sta", "lp");
+		if (draw_trk) mg->AddEntry(h_resolution2, "Trk", "lp");
+		if (draw_glb) mg->AddEntry(h_resolution3, "Glb", "lp");
+		if (draw_disp) mg->AddEntry(h_resolution4, "DispGlb", "lp");
+		if (draw_dispSta) mg->AddEntry(h_resolution5, "DispSta", "lp");
+		
+		legend->Draw();
+
+  		// Save
+ 		canvas->Modified();
+  		canvas->Update();
+		
+		if (doSavePng) canvas->SaveAs(directory + "/resolution_" + str(i) + "_" + filename + ".png");
+		
+		
+	}
+
+
+
+}
+
+
 
 
 //------------------------------------------------------------------------------
