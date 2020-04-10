@@ -313,7 +313,7 @@ void DrawCompare(TString filename)
 		
 		
 		
-		Float_t max[5] = {h_resolution1->GetMaximum(), h_resolution2->GetMaximum(), h_resolution3->GetMaximum(), h_resolution4->GetMaximum(), h_resolution5->GetMaximum()};
+		Float_t max[5] = {h_resolution1[i]->GetMaximum(), h_resolution2[i]->GetMaximum(), h_resolution3[i]->GetMaximum(), h_resolution4[i]->GetMaximum(), h_resolution5[i]->GetMaximum()};
 		
 		for (Int_t k = 0; k< 5; k++){
 			
@@ -336,11 +336,17 @@ void DrawCompare(TString filename)
 		
 		TMultiGraph* mg = new TMultiGraph();
 		
-		if (draw_sta) mg->Add(h_resolution1[i]);
-		if (draw_trk) mg->Add(h_resolution2[i]);
-		if (draw_glb) mg->Add(h_resolution3[i]);
-		if (draw_disp) mg->Add(h_resolution4[i]);
-		if (draw_dispSta) mg->Add(h_resolution5[i]);
+		TGraphAsymmErrors* hist1 = new TGraphAsymmErrors(h_resolution1[i]);
+		TGraphAsymmErrors* hist2 = new TGraphAsymmErrors(h_resolution2[i]);
+		TGraphAsymmErrors* hist3 = new TGraphAsymmErrors(h_resolution3[i]);
+		TGraphAsymmErrors* hist4 = new TGraphAsymmErrors(h_resolution4[i]);
+		TGraphAsymmErrors* hist5 = new TGraphAsymmErrors(h_resolution5[i]);
+		
+		if (draw_sta) mg->Add(hist1);
+		if (draw_trk) mg->Add(hist2);
+		if (draw_glb) mg->Add(hist3);
+		if (draw_disp) mg->Add(hist4);
+		if (draw_dispSta) mg->Add(hist5);
 		
 		mg->Draw("apz");
 		
@@ -357,11 +363,11 @@ void DrawCompare(TString filename)
 
   		SetLegend(legend, 0.025);
 		
-		if (draw_sta) mg->AddEntry(h_resolution1, "Sta", "lp");
-		if (draw_trk) mg->AddEntry(h_resolution2, "Trk", "lp");
-		if (draw_glb) mg->AddEntry(h_resolution3, "Glb", "lp");
-		if (draw_disp) mg->AddEntry(h_resolution4, "DispGlb", "lp");
-		if (draw_dispSta) mg->AddEntry(h_resolution5, "DispSta", "lp");
+		if (draw_sta) mg->AddEntry(hist1, "Sta", "lp");
+		if (draw_trk) mg->AddEntry(hist2, "Trk", "lp");
+		if (draw_glb) mg->AddEntry(hist3, "Glb", "lp");
+		if (draw_disp) mg->AddEntry(hist4, "DispGlb", "lp");
+		if (draw_dispSta) mg->AddEntry(hist5, "DispSta", "lp");
 		
 		legend->Draw();
 
