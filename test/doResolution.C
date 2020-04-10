@@ -363,11 +363,11 @@ void DrawCompare(TString filename)
 
   		SetLegend(legend, 0.025);
 		
-		if (draw_sta) mg->AddEntry(hist1, "Sta", "lp");
-		if (draw_trk) mg->AddEntry(hist2, "Trk", "lp");
-		if (draw_glb) mg->AddEntry(hist3, "Glb", "lp");
-		if (draw_disp) mg->AddEntry(hist4, "DispGlb", "lp");
-		if (draw_dispSta) mg->AddEntry(hist5, "DispSta", "lp");
+		if (draw_sta) legend->AddEntry(hist1, "Sta", "lp");
+		if (draw_trk) legend->AddEntry(hist2, "Trk", "lp");
+		if (draw_glb) legend->AddEntry(hist3, "Glb", "lp");
+		if (draw_disp) legend->AddEntry(hist4, "DispGlb", "lp");
+		if (draw_dispSta) legend->AddEntry(hist5, "DispSta", "lp");
 		
 		legend->Draw();
 
