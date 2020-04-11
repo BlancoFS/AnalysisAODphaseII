@@ -291,25 +291,25 @@ void DrawCompare(TString filename)
 		
 		Float_t ymax = 0;
 		
-		TH2F* hm1 = (TH2F*)file->Get(Form("muonAnalysis/StaMuons_resolution_pt%d", i));
+		TH2F* hm1 = (TH2F*)file->Get(Form("muonAnalysis/StaMuons_pt_resolution_pt%d", i));
 		TString hname1 = Form("%s_%s_vxy", hm1->GetName(), filename.Data());
-		h_resolution1[i] = (TH1F*)hm1->ProyectionY(hname1); 
+		h_resolution1[i] = (TH1F*)hm1->ProjectionY(hname1); 
 		
-		TH2F* hm2 = (TH2F*)file->Get(Form("muonAnalysis/TrkMuons_resolution_pt%d", i));
+		TH2F* hm2 = (TH2F*)file->Get(Form("muonAnalysis/TrkMuons_pt_resolution_pt%d", i));
 		TString hname2 = Form("%s_%s_vxy", hm2->GetName(), filename.Data());
-		h_resolution2[i] = (TH1F*)hm2->ProyectionY(hname2);
+		h_resolution2[i] = (TH1F*)hm2->ProjectionY(hname2);
 		
-		TH2F* hm3 = (TH2F*)file->Get(Form("muonAnalysis/GlbMuons_resolution_pt%d", i));
+		TH2F* hm3 = (TH2F*)file->Get(Form("muonAnalysis/GlbMuons_pt_resolution_pt%d", i));
 		TString hname3 = Form("%s_%s_vxy", hm3->GetName(), filename.Data());
-		h_resolution3[i] = (TH1F*)hm3->ProyectionY(hname3);
+		h_resolution3[i] = (TH1F*)hm3->ProjectionY(hname3);
 		
-		TH2F* hm4 = (TH2F*)file->Get(Form("muonAnalysis/DispGlbMuons_resolution_pt%d", i));
+		TH2F* hm4 = (TH2F*)file->Get(Form("muonAnalysis/DispGlbMuons_pt_resolution_pt%d", i));
 		TString hname4 = Form("%s_%s_vxy", hm4->GetName(), filename.Data());
-		h_resolution4[i] = (TH1F*)hm4->ProyectionY(hname4);
+		h_resolution4[i] = (TH1F*)hm4->ProjectionY(hname4);
 		
-		TH2F* hm5 = (TH2F*)file->Get(Form("muonAnalysis/DispStaMuons_resolution_pt%d", i));
+		TH2F* hm5 = (TH2F*)file->Get(Form("muonAnalysis/DispStaMuons_pt_resolution_pt%d", i));
 		TString hname5 = Form("%s_%s_vxy", hm5->GetName(), filename.Data());
-		h_resolution5[i] = (TH1F*)hm5->ProyectionY(hname5);
+		h_resolution5[i] = (TH1F*)hm5->ProjectionY(hname5);
 		
 		
 		
