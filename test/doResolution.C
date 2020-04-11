@@ -285,9 +285,12 @@ void DrawCompare(TString filename)
 	TH1F* h_resolution3[nbins_pt];
 	TH1F* h_resolution4[nbins_pt];
 	TH1F* h_resolution5[nbins_pt];
-	
+
 	
 	for (Int_t i=0; i<nbins_pt; i++) {
+		
+		TCanvas* canvas = new TCanvas(Form(" resolution%d (" + filename + ")",i),
+                                  Form(" resolution%d (" + filename + ")",i));
 		
 		Float_t ymax = 0;
 		
@@ -375,7 +378,7 @@ void DrawCompare(TString filename)
  		canvas->Modified();
   		canvas->Update();
 		
-		if (doSavePng) canvas->SaveAs(directory + "/resolution_" + str(i) + "_" + filename + ".png");
+		if (doSavePng) canvas->SaveAs(Form(directory + "/resolution_%d" + "_" + filename + ".png",i));
 		
 		
 	}
