@@ -337,40 +337,32 @@ void DrawCompare(TString filename)
 		h_resolution4[i]->SetLineWidth(2);
 		h_resolution5[i]->SetLineWidth(2);
 		
-		TMultiGraph* mg = new TMultiGraph();
+		h_resolution1[i]->SetMinimum(0.0);
+		h_resolution1[i]->SetMaximum(ymax);
 		
-		TGraphAsymmErrors* hist1 = new TGraphAsymmErrors(h_resolution1[i]);
-		TGraphAsymmErrors* hist2 = new TGraphAsymmErrors(h_resolution2[i]);
-		TGraphAsymmErrors* hist3 = new TGraphAsymmErrors(h_resolution3[i]);
-		TGraphAsymmErrors* hist4 = new TGraphAsymmErrors(h_resolution4[i]);
-		TGraphAsymmErrors* hist5 = new TGraphAsymmErrors(h_resolution5[i]);
 		
-		if (draw_sta) mg->Add(hist1);
-		if (draw_trk) mg->Add(hist2);
-		if (draw_glb) mg->Add(hist3);
-		if (draw_disp) mg->Add(hist4);
-		if (draw_dispSta) mg->Add(hist5);
+		h_resolution1[i]->Draw("hist");
+                h_resolution2[i]->Draw("hist same");
+                h_resolution3[i]->Draw("hist same");
+                h_resolution4[i]->Draw("hist same");
+                h_resolution5[i]->Draw("hist same");
 		
-		mg->Draw("apz");
 		
-		mg->SetMinimum(0.0);
-		mg->SetMaximum(ymax);
-		
-		mg->SetTitle("");
-  		mg->GetXaxis()->SetTitle(Form(" %.0f < p_{T} < %.0f GeV: #Deltaq/p_{T} / (q/p_{T})", pt_bins[i], pt_bins[i+1])));
-  		mg->GetYaxis()->SetTitle("entries / bin");
- 		mg->GetXaxis()->SetTitleOffset(1.5);
- 		mg->GetYaxis()->SetTitleOffset(2.0);
+		h_resolution1[i]->SetTitle("");
+  		h_resolution1[i]->GetXaxis()->SetTitle(Form(" %.0f < p_{T} < %.0f GeV: #Deltaq/p_{T} / (q/p_{T})", pt_bins[i], pt_bins[i+1])));
+  		h_resolution1[i]->GetYaxis()->SetTitle("entries / bin");
+ 		h_resolution1[i]->GetXaxis()->SetTitleOffset(1.5);
+ 		h_resolution1[i]->GetYaxis()->SetTitleOffset(2.0);
 		
 		TLegend* legend = new TLegend(0.74, 0.5, 0.90, 0.91);
 
   		SetLegend(legend, 0.025);
 		
-		if (draw_sta) legend->AddEntry(hist1, "Sta", "lp");
-		if (draw_trk) legend->AddEntry(hist2, "Trk", "lp");
-		if (draw_glb) legend->AddEntry(hist3, "Glb", "lp");
-		if (draw_disp) legend->AddEntry(hist4, "DispGlb", "lp");
-		if (draw_dispSta) legend->AddEntry(hist5, "DispSta", "lp");
+		if (draw_sta) legend->AddEntry(h_resolution1[i], "Sta", "lp");
+		if (draw_trk) legend->AddEntry(h_resolution2[i], "Trk", "lp");
+		if (draw_glb) legend->AddEntry(h_resolution3[i], "Glb", "lp");
+		if (draw_disp) legend->AddEntry(h_resolution4[i], "DispGlb", "lp");
+		if (draw_dispSta) legend->AddEntry(h_resolution5[i], "DispSta", "lp");
 		
 		legend->Draw();
 
