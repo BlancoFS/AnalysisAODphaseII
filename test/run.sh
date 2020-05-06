@@ -9,7 +9,7 @@ printf "\n [run.sh] Setup CMS environment\n"
 
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 
-cd /gpfs/users/piedra/project/work/CMSSW_9_1_1_patch1/src
+cd /gpfs/users/blancoser/CMSSW_9_3_9_patch1/src
 
 printf "\n [run.sh] We are in the CMSSW release %s\n" $PWD
 
