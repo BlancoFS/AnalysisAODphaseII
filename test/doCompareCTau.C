@@ -2,7 +2,7 @@
 //
 //     Create histograms of the samples.
 //
-//     root -l -b -q 'doEfficiencies.C+("sample1", "sample2", "sample3", "sample4")'
+//     root -l -b -q 'doCompareCTau.C+("sample1", "sample2", "sample3", "sample4")'
 //---------------------------------------------------------------------------
 
 #include "TCanvas.h"
@@ -60,7 +60,7 @@ void		SetLegend(TLegend* lt,
 
 //Constructor of the class.
 
-void doEfficiencies(TString name1, 
+void doCompareCTau(TString name1, 
                     TString name2,
                     TString name3,
                     TString name4)
