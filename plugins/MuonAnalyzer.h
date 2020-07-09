@@ -72,6 +72,18 @@ class ExampleMuonAnalyzer2: public edm::EDAnalyzer {
   TH1F* h_vz;
   TH1F* h_vr;
   TH1F* h_pt;
+  
+  TH1F* hNumberOfLepton;
+  TH2F* hNumber2D;
+  TH1F* hInvMass;
+  TH1F* hInvMassTrk;
+  TH1F* hInvMassGlb;
+  TH1F* hInvMassSta;
+
+  TH1F* hInvMassHiggs;
+  TH1F* hInvMassTrkHiggs;
+  TH1F* hInvMassGlbHiggs;
+  TH1F* hInvMassStaHiggs;
 
   TH2F* hGenMuons_vxy_vz;
   TH2F* hStaMuons_vxy_vz;
