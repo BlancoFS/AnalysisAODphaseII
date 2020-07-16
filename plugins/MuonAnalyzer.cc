@@ -297,7 +297,10 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
   //Local variable that save the number of match leptons                                                                                                                                                    
   Float_t numberOfLeptons = 0.0;
   Float_t numberOfGenMuon = 0.0;
-	
+  Int_t ind_muon1 = NULL;
+  Int_t ind_muon2 = NULL;
+  Int_t ind_muon3 = NULL;
+  Int_t ind_muon4 = NULL;
 	
   
   //Loop over gen paticles
@@ -349,8 +352,11 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
     Float_t soft_pt_resolution    = -999;
     Float_t dispGlb_pt_resolution = -999;
     Float_t dispSta_pt_resolution = -999;
+	
+    Int_t i = 0;
+    if ((*genParticles)[i].isMuon()) i++;
     
-    
+    Int_t k = 0;
     
     for (reco::MuonCollection::const_iterator muon=muons->begin(); muon!=muons->end(); ++muon) {
 	    
@@ -365,7 +371,6 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 	    hMuPFPhotonIso ->Fill(photonIso  / muon->pt());
 	    hMuPFPUIso     ->Fill(puIso      / muon->pt());
 	    hMuPFIso       ->Fill(iso        / muon->pt());
-	    
 	    
 	    
 	    
@@ -413,6 +418,16 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
 	if (dR < trk_min_deltaR) {
 	  trk_min_deltaR    = dR;
 	  trk_pt_resolution = ((muCharge/muPt) - (charge/pt)) / (charge/pt);
+	  
+	  if (i == 1){
+		  ind_muon1 = k;
+	  } else if (i == 2){
+		  ind_muon2 = k;
+	  } else if (i == 3){
+		  ind_muon3 = k;
+	  } else if (i == 4){
+		  ind_muon4 = k;
+	  }
 	}
       }
 
@@ -513,6 +528,9 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
         dispGlb_min_deltaR = dR;
 	dispGlb_pt_resolution = ((trCharge/trPt) - (charge/pt)) / (charge/pt);
       }
+	    
+      k++;
+	    
     }//for...displacedGlobalMuons collection	
 	  
     //Loop over the displacedStandAloneMuons collection.
@@ -567,8 +585,6 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       {
 	hStaMuons_dR->Fill(sta_min_deltaR);
 	    
-	numberOfLeptons = numberOfLeptons + 1;
-	    
 	if (sta_min_deltaR < deltaR_max)
 	  {
 	    hStaMuons_vxy->Fill(vxy);
@@ -603,6 +619,8 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       {
 	hTrkMuons_dR->Fill(trk_min_deltaR);
 	
+	numberOfLeptons = numberOfLeptons + 1;
+	    
 	if (trk_min_deltaR < deltaR_max)
 	  {
 	    hTrkMuons_vxy->Fill(vxy);
@@ -801,40 +819,44 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
   //Case 2 leptons matched:                                                                                                                                                                                 
   if (numberOfLeptons == 2){
 
+    Int_t i = 0;
     for (reco::MuonCollection::const_iterator mu1=muons->begin(); mu1!=muons->end(); ++mu1) {
 
+      Int_t j = 0;
       for (reco::MuonCollection::const_iterator mu2=muons->begin(); mu2!=muons->end(); ++mu2) {
-
-        if (mu1 < mu2) {
-
-          if (mu1->charge() * mu2->charge() < 0){
-
-            hInvMass->Fill((mu1->p4() + mu2->p4()).mass());
-	  }
-	  if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
-
-              hInvMassSta->Fill((mu1->p4() + mu2->p4()).mass());
-
-          }
-
-            if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
-
-              hInvMassGlb->Fill((mu1->p4() + mu2->p4()).mass());
-
+        if (i == ind_muon1 && j == ind_muon2){
+          if (mu1 < mu2) {
+  
+            if (mu1->charge() * mu2->charge() < 0){
+  
+              hInvMass->Fill((mu1->p4() + mu2->p4()).mass());
+	    
+	    if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
+  
+                hInvMassSta->Fill((mu1->p4() + mu2->p4()).mass());
+  
             }
-
-            if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
-
-              hInvMassTrk->Fill((mu1->p4() + mu2->p4()).mass());
-
-            }
-
+  
+              if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
+  
+                hInvMassGlb->Fill((mu1->p4() + mu2->p4()).mass());
+  
+              }
+  
+              if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
+  
+                hInvMassTrk->Fill((mu1->p4() + mu2->p4()).mass());
+  
+              }
+  
+	    }
+  
           }
-
-        }
-
+		
+	}
+	j++;
       }
-
+      i++;
     }
 
   }
@@ -856,49 +878,52 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
     Float_t M1Glb = -999.0;
     Float_t M2Glb = -999.0;
 
+    Int_t i = 0;
     for(reco::MuonCollection::const_iterator mu1=muons->begin(); mu1!=muons->end(); ++mu1) {
 
+      Int_t j = 0;	
       for (reco::MuonCollection::const_iterator mu2=muons->begin(); mu2!=muons->end(); ++mu2) {
+        if (j == ind_muon2 || j == ind_muon3){
+          if (mu1 < mu2 && i == ind_muon1) {
+  
+            if (mu1->charge() * mu2->charge() < 0){
+  
+              if (firstMass == false){
+                M1 = (mu1->p4() + mu2->p4()).mass();  //First combiantion mu+ with mu-                                                                                                                        
+  
+                if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
+                  M1Trk = M1;
+                }
+                if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
+                  M1Sta = M1;
+                }
+                if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
+                  M1Glb = M1;
+                }
+	   } else {                               //Second combination                                                                                                                                     
+                M2 = (mu1->p4() + mu2->p4()).mass();
+  
+                if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
+                  M2Trk = M2;
+                }
+                if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
+                  M2Sta = M2;
+                }
+                if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
+	  	M2Glb = M2;
+                }
+  
+              }
 
-        if (mu1 < mu2) {
-
-          if (mu1->charge() * mu2->charge() < 0){
-
-            if (firstMass == false){
-              M1 = (mu1->p4() + mu2->p4()).mass();  //First combiantion mu+ with mu-                                                                                                                        
-
-              if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
-                M1Trk = M1;
-              }
-              if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
-                M1Sta = M1;
-              }
-              if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
-                M1Glb = M1;
-              }
-	 } else {                               //Second combination                                                                                                                                     
-              M2 = (mu1->p4() + mu2->p4()).mass();
-
-              if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
-                M2Trk = M2;
-              }
-              if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
-                M2Sta = M2;
-              }
-              if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
-		M2Glb = M2;
-              }
+              firstMass = true;
 
             }
-
-            firstMass = true;
-
-          }
+	  }
 
         }
-
+        j++;
       }
-
+      i++;
     }
 
    //Reconstructed muons                                                                                                                                                                                   
@@ -987,84 +1012,91 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
     Float_t M3Glb = -999.0;
     Float_t M4Glb = -999.0;
 
+    Int_t i = 0;
     for (reco::MuonCollection::const_iterator mu1=muons->begin(); mu1!=muons->end(); ++mu1) {
 
+      Int_t j = 0;
       for(reco::MuonCollection::const_iterator mu2=muons->begin(); mu2!=muons->end(); ++mu2) {
 
-        if (mu1 < mu2) {
-
-          if (mu1->charge() * mu2->charge() < 0){
-
-
-            if (index == 1){
-              M1 = (mu1->p4() + mu2->p4()).mass();  //First combiantion mu+ with mu-                                                                                                                       \
-                                                                                                                                                                                                            
-
-              if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
-		M1Trk = M1;
+	 if (i == ind_muon1 || i == ind_muon2 || i == ind_muon3 || i == ind_muon4){
+	
+	  if (j == ind_muon1 || j == ind_muon2 || j == ind_muon3 || j == ind_muon4){
+            if (mu1 < mu2) {
+    
+              if (mu1->charge() * mu2->charge() < 0){
+    
+    
+                if (index == 1){
+                  M1 = (mu1->p4() + mu2->p4()).mass();  //First combiantion mu+ with mu-                                                                                                                       \
+                                                                                                                                                                                                                
+    
+                  if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
+		    M1Trk = M1;
+                  }
+                  if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
+                    M1Sta = M1;
+                  }
+                  if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
+                    M1Glb = M1;
+                  }
+    
+                  index++;
+    
+                } else if(index == 2){                               //Second combination                                                                                                                      \
+                                                                                                                                                                                                                
+                  M2 = (mu1->p4() + mu2->p4()).mass();
+    
+                  if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
+                    M2Trk = M2;
+                  }
+                  if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
+                    M2Sta = M2;
+                  }
+                  if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
+                    M2Glb = M2;
+                    }
+    
+                  index++;
+	        }else if(index == 3){                          //Third combination, second pair                                                                                                                 
+  
+                  M3 = (mu1->p4() + mu2->p4()).mass();
+    
+                  if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
+                    M3Trk = M3;
+                  }
+                  if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
+                    M3Sta = M3;
+                  }
+                  if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
+                    M3Glb = M3;
+                  }
+    
+                  index++;
+    
+	       }else {                                     //Fourth combination, second pair                                                                                                                   
+    
+                  M4 = (mu1->p4() + mu2->p4()).mass();
+  
+                  if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
+                    M4Trk = M4;
+                  }
+                  if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
+                    M4Sta = M4;
+                  }
+                  if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
+                    M4Glb = M4;
+                  }
+    
+                }
+    
               }
-              if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
-                M1Sta = M1;
-              }
-              if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
-                M1Glb = M1;
-              }
-
-              index++;
-
-            } else if(index == 2){                               //Second combination                                                                                                                      \
-                                                                                                                                                                                                            
-              M2 = (mu1->p4() + mu2->p4()).mass();
-
-              if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
-                M2Trk = M2;
-              }
-              if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
-                M2Sta = M2;
-              }
-              if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
-                M2Glb = M2;
-              }
-
-              index++;
-	    }else if(index == 3){                          //Third combination, second pair                                                                                                                 
-
-              M3 = (mu1->p4() + mu2->p4()).mass();
-
-              if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
-                M3Trk = M3;
-              }
-              if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
-                M3Sta = M3;
-              }
-              if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
-                M3Glb = M3;
-              }
-
-              index++;
-
-	   }else {                                     //Fourth combination, second pair                                                                                                                   
-
-              M4 = (mu1->p4() + mu2->p4()).mass();
-
-              if (mu1->isTrackerMuon() && mu2->isTrackerMuon()){
-                M4Trk = M4;
-              }
-              if (mu1->isStandAloneMuon() && mu2->isStandAloneMuon()){
-                M4Sta = M4;
-              }
-              if (mu1->isGlobalMuon() && mu2->isGlobalMuon()){
-                M4Glb = M4;
-              }
-
-            }
-
-          }
-
+	    }
+	  }
+		
         }
-
+        j++;
       }
-
+      i++;
     }
 
   //First pair combination.                                                                                                                                                                               
@@ -1188,15 +1220,16 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
       hInvMassGlb->Fill(M4Glb);
     }
 
+  Int_t a = 0;
   for (reco::MuonCollection::const_iterator mu1=muons->begin(); mu1!=muons->end(); ++mu1) {
-
+      Int_t b = 0;
       for (reco::MuonCollection::const_iterator mu2=muons->begin(); mu2!=muons->end(); ++mu2) {
-
+        Int_t c = 0;
         for (reco::MuonCollection::const_iterator mu3=muons->begin(); mu3!=muons->end(); ++mu3) {
-
+          Int_t d = 0;
           for (reco::MuonCollection::const_iterator mu4=muons->begin(); mu4!=muons->end(); ++mu4) {
 
-            if (mu1 < mu2 && mu2 < mu3 && mu3 < mu4){
+            if (a == ind_muon1 && b == ind_muon2 && c == ind_muon3 && d == ind_muon4){
 
               Float_t mass = (mu1->p4() + mu2->p4() + mu3->p4() + mu4->p4()).mass();
               hInvMassHiggs->Fill(mass);
@@ -1218,13 +1251,13 @@ void ExampleMuonAnalyzer2::analyze(const Event& event, const EventSetup& eventSe
             }
 
           }
-
+          d++;
         }
-
+        c++;
       }
-
+      b++;
     }
-
+    a++;
   }
 
 }
